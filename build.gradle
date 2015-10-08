@@ -1,12 +1,60 @@
 apply plugin: 'java'
 
-sourceCompatibility = 1.5
 version = '1.0'
 
-repositories {
-    mavenCentral()
+
+apply plugin: 'idea'
+idea {
+    project {
+        jdkName = '1.7'
+        languageLevel = '1.7'
+    }
+}
+subprojects {
+    apply plugin: 'idea'
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+ext.sourceEncoding = 'UTF-8'
+ext.compatibility = 1.7
+
+allprojects{
+    //common configuration
+
+    repositories {
+        mavenCentral()
+    }
+
+    configurations.all {
+        // check for updates every build test
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+
+    apply plugin: 'java'
+    sourceCompatibility = compatibility
+    compileJava.options.encoding = sourceEncoding
+    compileTestJava.options.encoding = sourceEncoding
+
+    configurations {
+        providedCompile
+        providedRuntime
+        providedRuntime.extendsFrom providedCompile
+    }
+
+
+    sourceSets {
+        main {
+            compileClasspath += configurations.providedCompile
+            runtimeClasspath += configurations.providedRuntime
+        }
+        test {
+            compileClasspath += configurations.providedCompile
+            runtimeClasspath += configurations.providedRuntime
+        }
+    }
 }

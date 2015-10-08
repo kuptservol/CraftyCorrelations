@@ -1,2 +1,6 @@
 rootProject.name = 'CraftyCorrelations'
 
+include 'service'
+include "service:concreteService"
+
+
