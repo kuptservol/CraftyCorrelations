@@ -56,4 +56,28 @@ public class SpearmansRankCorrelationTest{
     }
 
 
+    @Test
+    /**
+     * Выборки разного кол-ва точек
+     */
+    public void testDifferentNumberOfPointsCorrelationDiffLine(){
+
+        int size1 = 100000;
+        int size2 = 100;
+        double[] xArray = new double[size1];
+        double[] yArray = new double[size2];
+
+        Random random = new Random();
+        for(int i = 0; i<size1;i++ )
+        {
+            xArray[i] = random.nextDouble();
+        }
+        for(int i = 0; i<size2;i++ )
+        {
+            yArray[i] = random.nextDouble();
+        }
+
+
+    }
+
 }
